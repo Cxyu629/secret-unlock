@@ -65,16 +65,16 @@ export default function Line(props: LineProps) {
     console.log(
       props.div1().innerText +
         " " +
-        (props.div2 !== undefined ? props.div2().innerText : "mouse")
+        (props.div2 !== undefined ? props.div2().innerText : "pointer")
     );
-    window.addEventListener("mousemove", setStyle);
+    window.addEventListener("pointermove", setStyle);
   });
 
   const [state, _] = usePattern();
 
   createEffect(() => {
     if (state() === "off") {
-      window.removeEventListener("mousemove", setStyle);
+      window.removeEventListener("pointermove", setStyle);
       if (props.div2 === undefined) ref.remove();
     }
   });

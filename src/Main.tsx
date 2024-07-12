@@ -210,16 +210,16 @@ const Main: VoidComponent = () => {
     if (patternInput.length > 1) {
       setPatternInputHistory((prev) => [...prev, [...patternInput]]);
     }
-    window.removeEventListener("mouseup", removeRegistering);
+    window.removeEventListener("pointerup", removeRegistering);
   };
 
   createEffect(() => {
     console.log(state());
     if (state() === "start") {
       setPatternInput([]);
-      window.addEventListener("mouseup", removeRegistering);
+      window.addEventListener("pointerup", removeRegistering);
     } else if (state() === "registering") {
-      window.addEventListener("mouseup", removeRegistering);
+      window.addEventListener("pointerup", removeRegistering);
     } else {
       console.log(unwrap((() => patternInput)()));
     }

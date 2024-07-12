@@ -16,12 +16,16 @@ export default function Button(props: ButtonProps) {
   const [state, setState] = usePattern();
 
   onMount(() => {
-    myRef()!.addEventListener("mousedown", () => {
+    myRef()!.addEventListener("pointerdown", function (e) {
+      this.releasePointerCapture(e.pointerId);
+    });
+
+    myRef()!.addEventListener("pointerdown", () => {
       setState("start");
       props.patternAction();
     });
 
-    myRef()!.addEventListener("mouseleave", () => {
+    myRef()!.addEventListener("pointerleave", () => {
       if (state() === "start") {
         setState("registering");
       }
@@ -30,9 +34,9 @@ export default function Button(props: ButtonProps) {
 
   createEffect(() => {
     if (state() === "registering") {
-      myRef()!.addEventListener("mouseover", props.patternAction);
+      myRef()!.addEventListener("pointerover", props.patternAction);
     } else {
-      myRef()!.removeEventListener("mouseover", props.patternAction);
+      myRef()!.removeEventListener("pointerover", props.patternAction);
     }
   });
 
