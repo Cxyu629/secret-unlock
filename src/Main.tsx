@@ -73,6 +73,38 @@ const Settings: VoidComponent<{
   );
 };
 
+const LogPanel: VoidComponent<{
+  patternInputHistory: number[][];
+  pinInput: number[];
+}> = (props) => {
+  return (
+    <div class="flex flex-col gap-1">
+      <p class="text-2xl font-semibold">Log panel</p>
+      <div>
+        <p>pattern history</p>
+        <div class="border rounded-sm p-2">
+          <Index each={props.patternInputHistory}>
+            {(item, index) => (
+              <p>
+                {index + 1}:{" "}
+                {item()
+                  .map((id) => textContents[id])
+                  .join(", ")}
+              </p>
+            )}
+          </Index>
+        </div>
+      </div>
+      <div>
+        <p>PIN</p>
+        <div class="border rounded-sm p-2">
+          {props.pinInput.map((id) => textContents[id]).join(" ")}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const textContents = [
   "1",
   "2",
@@ -194,8 +226,8 @@ const Main: VoidComponent = () => {
   });
 
   return (
-    <div class="flex flex-row w-2/3 justify-self-center">
-      <div class="flex flex-col w-1/2 justify-self-center">
+    <>
+      <div class="flex flex-col md:w-1/2 lg:w-1/3 justify-self-center">
         <Settings
           showHitbox={showHitbox}
           setShowHitbox={setShowHitbox}
@@ -208,7 +240,12 @@ const Main: VoidComponent = () => {
           <Index each={pinInput}>{() => <div class="text-4xl">*</div>}</Index>
         </div>
         <div class="flex justify-center m-10">{grid}</div>
+        <LogPanel
+          patternInputHistory={patternInputHistory}
+          pinInput={pinInput}
+        />
       </div>
+
       <div>
         <Show when={lines().lines.length > 0 && showPattern()}>
           <Index each={lines().lines}>
@@ -218,31 +255,7 @@ const Main: VoidComponent = () => {
           </Index>
         </Show>
       </div>
-      <div class="flex flex-col gap-1">
-        <p class="text-2xl font-semibold">Log panel</p>
-        <div>
-          <p>pattern history</p>
-          <div class="border rounded-sm p-2">
-            <Index each={patternInputHistory}>
-              {(item, index) => (
-                <p>
-                  {index + 1}:{" "}
-                  {item()
-                    .map((id) => textContents[id])
-                    .join(", ")}
-                </p>
-              )}
-            </Index>
-          </div>
-        </div>
-        <div>
-          <p>PIN</p>
-          <div class="border rounded-sm p-2">
-            {pinInput.map((id) => textContents[id]).join(" ")}
-          </div>
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 
