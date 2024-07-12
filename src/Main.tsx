@@ -239,7 +239,7 @@ const Main: VoidComponent = () => {
         <div class="flex justify-center h-10">
           <Index each={pinInput}>{() => <div class="text-4xl">*</div>}</Index>
         </div>
-        <div class="flex justify-center m-10">{grid}</div>
+        <div class="flex justify-center m-10 touch-none">{grid}</div>
         <LogPanel
           patternInputHistory={patternInputHistory}
           pinInput={pinInput}
