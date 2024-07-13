@@ -1,6 +1,6 @@
 import { Accessor, createEffect, onMount } from "solid-js";
 import { getOffset } from "../utils";
-import { usePattern } from "../contexts/PatternContext";
+import { usePatternContext } from "../contexts/PatternContext";
 
 type LineProps = {
   div1: Accessor<HTMLDivElement>;
@@ -70,7 +70,9 @@ export default function Line(props: LineProps) {
     window.addEventListener("pointermove", setStyle);
   });
 
-  const [state, _] = usePattern();
+  const {
+    stateSignal: [state],
+  } = usePatternContext();
 
   createEffect(() => {
     if (state() === "off") {

@@ -1,4 +1,6 @@
 import { PatternProvider } from "./contexts/PatternContext";
+import { PinProvider } from "./contexts/PinContext";
+import { SettingsProvider } from "./contexts/SettingsContext";
 import Main from "./Main";
 
 function App() {
@@ -8,7 +10,11 @@ function App() {
         secret unlock (Vite + Solid)
       </h1>
       <PatternProvider>
-        <Main />
+        <PinProvider>
+          <SettingsProvider>
+            <Main />
+          </SettingsProvider>
+        </PinProvider>
       </PatternProvider>
     </div>
   );

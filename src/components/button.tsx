@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { Accessor, createEffect, createSignal, onMount } from "solid-js";
-import { usePattern } from "../contexts/PatternContext";
+import { usePatternContext } from "../contexts/PatternContext";
 
 type ButtonProps = {
   showHitbox: Accessor<boolean>;
@@ -13,7 +13,9 @@ type ButtonProps = {
 export default function Button(props: ButtonProps) {
   const [myRef, setMyRef] = createSignal<HTMLDivElement>();
 
-  const [state, setState] = usePattern();
+  const {
+    stateSignal: [state, setState],
+  } = usePatternContext();
 
   onMount(() => {
     myRef()!.addEventListener("pointerdown", function (e) {
