@@ -8,14 +8,25 @@ type ButtonProps = {
   item: string;
   patternAction: () => void;
   pinAction: () => void;
+  registered: () => boolean;
 };
 
 export default function Button(props: ButtonProps) {
   const [myRef, setMyRef] = createSignal<HTMLDivElement>();
+  const [animatePattern, setAnimatePattern] = createSignal<boolean>(false);
+  const [animatePin, setAnimatePin] = createSignal<boolean>(false);
 
   const {
     stateSignal: [state, setState],
   } = usePatternContext();
+
+  const registerSelf = () => {
+    if (!props.registered()) {
+      setAnimatePattern(true);
+      setTimeout(() => setAnimatePattern(false), 500);
+      props.patternAction();
+    }
+  };
 
   onMount(() => {
     myRef()!.addEventListener("pointerdown", function (e) {
@@ -24,28 +35,37 @@ export default function Button(props: ButtonProps) {
 
     myRef()!.addEventListener("pointerdown", () => {
       setState("start");
-      props.patternAction();
     });
 
     myRef()!.addEventListener("pointerleave", () => {
       if (state() === "start") {
         setState("registering");
+        registerSelf();
       }
     });
   });
 
   createEffect(() => {
     if (state() === "registering") {
-      myRef()!.addEventListener("pointerover", props.patternAction);
+      myRef()!.addEventListener("pointerover", registerSelf);
     } else {
-      myRef()!.removeEventListener("pointerover", props.patternAction);
+      myRef()!.removeEventListener("pointerover", registerSelf);
     }
   });
 
   return (
     <div
-      class="grid border size-16 rounded-full place-content-center hover:backdrop-brightness-125 active:backdrop-brightness-75"
-      onClick={props.pinAction}
+      class={clsx(
+        "before:absolute before:size-16 before:border before:rounded-full",
+        (animatePin() && "before:visible before:animate-single-ping ") ||
+          "before:invisible",
+        "grid border size-16 rounded-full place-content-center hover:backdrop-brightness-125 active:backdrop-brightness-75"
+      )}
+      onClick={() => {
+        props.pinAction();
+        setAnimatePin(true);
+        setTimeout(() => setAnimatePin(false), 460);
+      }}
     >
       <div
         ref={(el) => {
@@ -54,6 +74,7 @@ export default function Button(props: ButtonProps) {
         }}
         class={clsx(
           props.showHitbox() && "border",
+          animatePattern() && "animate-blink",
           "grid border-opacity-50 border-white rounded-full size-12 text-center content-center select-none	"
         )}
       >

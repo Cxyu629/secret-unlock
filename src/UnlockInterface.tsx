@@ -1,5 +1,5 @@
 import { VoidComponent, Index } from "solid-js";
-import { SetStoreFunction, unwrap } from "solid-js/store";
+import { SetStoreFunction } from "solid-js/store";
 import Button from "./components/button";
 import { usePatternContext } from "./contexts/PatternContext";
 import { usePinContext } from "./contexts/PinContext";
@@ -17,7 +17,7 @@ const UnlockInterface: VoidComponent<UnlockInterfaceProps> = (props) => {
   } = usePinContext();
 
   const {
-    patternInputStore: [, setPatternInput],
+    patternInputStore: [patternInput, setPatternInput],
     patternInputHistoryStore: [patternInputHistory],
   } = usePatternContext();
 
@@ -29,7 +29,7 @@ const UnlockInterface: VoidComponent<UnlockInterfaceProps> = (props) => {
 
   const triggerUnlock = () => {
     if (pinAnswer() === "" && patternAnswer() === "")
-      alert("no answew u dummy");
+      alert("no answers provided u dummy 💢💢💢");
     else if (
       (pinAnswer() === "" ||
         pinAnswer()
@@ -45,15 +45,9 @@ const UnlockInterface: VoidComponent<UnlockInterfaceProps> = (props) => {
     ) {
       alert("you very good good!!! uncle give you lollipop 🍭");
     } else {
-      console.log(
-        pinAnswer()
-          .split("")
-          .map((num) => textContents.findIndex((textVal) => textVal === num))
+      alert(
+        "you FAILURE! little jimmy is a cave boy and he can do better than you!!!"
       );
-      console.log(unwrap(pinInput));
-      console.log(patternAnswer());
-      console.log(unwrap(patternInputHistory.at(-1)));
-      alert("kono baka!! hentai!! nande omae konnani dame na no???");
     }
   };
 
@@ -82,6 +76,7 @@ const UnlockInterface: VoidComponent<UnlockInterfaceProps> = (props) => {
                       : triggerUnlock()
                     : setPinInput((prev) => [...prev, index])
                 }
+                registered={() => patternInput.includes(index)}
               />
             )}
           </Index>

@@ -16,7 +16,7 @@ const PatternTrace: VoidComponent<{ refs: HTMLDivElement[] }> = (props) => {
   } = usePatternContext();
 
   const {
-    showPatternSignal: [showPattern],
+    showPatternTraceSignal: [showPattern],
   } = useSettingsContext();
 
   const patternSettings = { thickness: 5, color: "white" };

@@ -42,7 +42,7 @@ export const PatternProvider: ParentComponent = (props) => {
       case "off":
         console.log(unwrap((() => patternInput)()));
         break;
-      case "start":
+        case "start":
         setPatternInput([]);
         window.addEventListener("pointerup", removeRegistering);
         break;

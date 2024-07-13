@@ -10,7 +10,7 @@ type Settings = {
   pinAnswerSignal: Signal<string>;
   patternAnswerSignal: Signal<string>;
   showHitboxSignal: Signal<boolean>;
-  showPatternSignal: Signal<boolean>;
+  showPatternTraceSignal: Signal<boolean>;
 };
 
 const SettingsContext = createContext<Settings>();
@@ -20,13 +20,13 @@ export const SettingsProvider: ParentComponent = (props) => {
   const [patternAnswer, setPatternAnswer] = createSignal("");
 
   const [showHitbox, setShowHitbox] = createSignal(true);
-  const [showPattern, setShowPattern] = createSignal(true);
+  const [showPatternTrace, setShowPatternTrace] = createSignal(true);
 
   const value: Settings = {
     pinAnswerSignal: [pinAnswer, setPinAnswer],
     patternAnswerSignal: [patternAnswer, setPatternAnswer],
     showHitboxSignal: [showHitbox, setShowHitbox],
-    showPatternSignal: [showPattern, setShowPattern],
+    showPatternTraceSignal: [showPatternTrace, setShowPatternTrace],
   };
 
   return (
