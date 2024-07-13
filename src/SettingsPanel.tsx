@@ -1,4 +1,4 @@
-import { VoidComponent } from "solid-js";
+import { onMount, VoidComponent } from "solid-js";
 import Toggle from "./components/toggle";
 import { useSettingsContext } from "./contexts/SettingsContext";
 import { usePinContext } from "./contexts/PinContext";
@@ -7,8 +7,8 @@ import Info from "./components/info";
 
 const SettingsPanel: VoidComponent = () => {
   const {
-    pinAnswerSignal: [, setPinAnswer],
-    patternAnswerSignal: [, setPatternAnswer],
+    pinAnswerSignal: [pinAnswer, setPinAnswer],
+    patternAnswerSignal: [patternAnswer, setPatternAnswer],
     showHitboxSignal: [showHitbox, setShowHitbox],
     showPatternTraceSignal: [showPatternTrace, setShowPatternTrace],
   } = useSettingsContext();
@@ -20,6 +20,11 @@ const SettingsPanel: VoidComponent = () => {
   const {
     patternInputHistoryStore: [, setPatternInputHistory],
   } = usePatternContext();
+
+  onMount(() => {
+    setPinAnswer("123456");
+    setPatternAnswer("1,2,3,5,7,DEL");
+  });
 
   return (
     <div class="flex flex-col gap-1">
@@ -46,10 +51,10 @@ const SettingsPanel: VoidComponent = () => {
         <input
           class="border border-transparent invalid:border-red-500"
           placeholder="e.g.: 135790"
-          value="123456"
+          value={pinAnswer()}
           type="text"
           pattern="[0-9]{1,50}"
-          onInput={(input) => setPinAnswer(input.currentTarget.value ?? "")}
+          onChange={(input) => setPinAnswer(input.currentTarget.value ?? "")}
         />
       </span>
       <span class="flex items-center gap-2">
@@ -58,10 +63,12 @@ const SettingsPanel: VoidComponent = () => {
         <input
           class="border border-transparent invalid:border-red-500"
           placeholder="e.g.: 3,1,OK,DEL,9"
-          value="1,2,3,5,7,DEL"
+          value={patternAnswer()}
           type="text"
           pattern="(?:([0-9]|DEL|OK)\s*,\s*)+([0-9]|DEL|OK)"
-          onInput={(input) => setPatternAnswer(input.currentTarget.value ?? "")}
+          onChange={(input) =>
+            setPatternAnswer(input.currentTarget.value ?? "")
+          }
         />
       </span>
       <span class="flex items-center gap-2">
