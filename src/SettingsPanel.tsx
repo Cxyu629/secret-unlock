@@ -41,7 +41,7 @@ const SettingsPanel: VoidComponent = () => {
         <span>PIN answer</span>
         <input
           class="border border-transparent invalid:border-red-500"
-          placeholder="A string of digits"
+          placeholder="135790"
           type="text"
           pattern="[0-9]{1,50}"
           onInput={(input) => setPinAnswer(input.currentTarget.value ?? "")}
@@ -51,7 +51,7 @@ const SettingsPanel: VoidComponent = () => {
         <span>pattern answer</span>
         <input
           class="border border-transparent invalid:border-red-500"
-          placeholder="The buttons' label separated by commas (spaces are optional)"
+          placeholder="3,1,OK,DEL,9"
           type="text"
           pattern="(?:([0-9]|DEL|OK)\s*,\s*)+([0-9]|DEL|OK)"
           onInput={(input) => setPatternAnswer(input.currentTarget.value ?? "")}
