@@ -53,7 +53,7 @@ const UnlockInterface: VoidComponent<UnlockInterfaceProps> = (props) => {
 
   return (
     <div>
-      <div class="flex justify-center h-10">
+      <div class="flex justify-center h-10 select-none">
         <Index each={pinInput}>{() => <div class="text-4xl">*</div>}</Index>
       </div>
       <div class="flex justify-center m-5 touch-none">

@@ -56,10 +56,10 @@ export default function Button(props: ButtonProps) {
   return (
     <div
       class={clsx(
-        "before:absolute before:size-16 before:border before:rounded-full",
+        "before:absolute before:size-16 before:outline before:outline-1 before:rounded-full",
         (animatePin() && "before:visible before:animate-single-ping ") ||
           "before:invisible",
-        "grid border size-16 rounded-full place-content-center hover:backdrop-brightness-125 active:backdrop-brightness-75"
+        "relative grid outline outline-1 size-16 rounded-full place-content-center hover:backdrop-brightness-125 active:backdrop-brightness-75"
       )}
       onClick={() => {
         props.pinAction();
@@ -67,19 +67,18 @@ export default function Button(props: ButtonProps) {
         setTimeout(() => setAnimatePin(false), 460);
       }}
     >
+      {props.item}
       <div
         ref={(el) => {
           props.ref(el);
           setMyRef(el);
         }}
         class={clsx(
-          props.showHitbox() && "border",
+          props.showHitbox() && "outline outline-1",
           animatePattern() && "animate-blink",
-          "grid border-opacity-50 border-white rounded-full size-12 text-center content-center select-none	"
+          "absolute top-2 left-2 grid rounded-full size-12 text-center content-center select-none	"
         )}
-      >
-        {props.item}
-      </div>
+      ></div>
     </div>
   );
 }

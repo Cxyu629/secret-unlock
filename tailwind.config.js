@@ -11,12 +11,10 @@ export default {
         myping: {
           "0%": {},
           "50%": {
-            transform: "scale(1.3)",
-            opacity: 60,
+            transform: "scale(1.5)",
           },
           "100%": {
             transform: "scale(1)",
-            opacity: 100,
           },
         },
       },
