@@ -59,7 +59,7 @@ export default function Button(props: ButtonProps) {
         "before:absolute before:size-16 before:outline before:outline-1 before:rounded-full",
         (animatePin() && "before:visible before:animate-single-ping ") ||
           "before:invisible",
-        "relative grid outline outline-1 size-16 rounded-full place-content-center hover:backdrop-brightness-125 active:backdrop-brightness-75"
+        "relative grid outline outline-1 size-16 rounded-full place-content-center select-none hover:backdrop-brightness-125 active:backdrop-brightness-75"
       )}
       onClick={() => {
         props.pinAction();
@@ -76,7 +76,7 @@ export default function Button(props: ButtonProps) {
         class={clsx(
           props.showHitbox() && "outline outline-1",
           animatePattern() && "animate-blink",
-          "absolute top-2 left-2 grid rounded-full size-12 text-center content-center select-none	"
+          "absolute top-2 left-2 grid rounded-full size-12 text-center content-center	"
         )}
       ></div>
     </div>
